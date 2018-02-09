@@ -23,6 +23,8 @@ namespace DotaApi.Model
 			var steamaccount = new RootObject();
 			webResponse = GetWebResponse.DownloadSteamAPIString(Common.steamaccountUrl, (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
 
+			// webResponse = GetWebResponse.DownloadSteamAPIString(@"http://api.opendota.com/api/players/347142169", (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
+
 			RootObject jObj = JsonConvert.DeserializeObject<RootObject>(webResponse);
 
 			if(jObj.Response.Players.Count > 0)
