@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
@@ -29,8 +30,8 @@ namespace DotaApi.Model
 
 			string response = GetWebResponse.DownloadSteamAPIString(Common.matchdetailsUrl, Common.API + "&match_id=" + matchid);
 
-			MatchDetails.MatchDetailsRootObject detail = JsonConvert.DeserializeObject<MatchDetails.MatchDetailsRootObject>(response);
-			MatchDetails.MatchDetailsResult match = detail.result;
+			MatchDetailsRootObject detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
+			MatchDetailsResult match = detail.result;
 
 			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.result.start_time);
 
@@ -39,6 +40,12 @@ namespace DotaApi.Model
 			Console.WriteLine("Real Players: {0}", match.human_players);
 			Console.WriteLine("Start Time: {0}", match.StartTime);
 			match.Lobbytype = LobbyTypes.GetLobbyType(match.lobby_type);
+
+
+			// Temp
+			var onePlayer = detail.result.players[0];
+			DataTable t = new DataTable();
+
 
 			foreach(var player in detail.result.players)
 			{
