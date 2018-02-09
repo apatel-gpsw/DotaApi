@@ -51,11 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="DotaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="DotaForm.Designer.cs">
+      <DependentUpon>DotaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Common.cs" />
     <Compile Include="Helpers\GetWebResponse.cs" />

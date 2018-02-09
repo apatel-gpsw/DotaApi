@@ -1,6 +1,6 @@
 ﻿namespace DotaApi
 {
-	partial class Form1
+	partial class DotaForm
 	{
 		/// <summary>
 		/// Required designer variable.
