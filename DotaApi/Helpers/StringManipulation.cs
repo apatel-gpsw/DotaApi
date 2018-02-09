@@ -45,17 +45,17 @@ namespace DotaApi.Helpers
 			{
 				return string.Empty;
 			}
-			// Return char and concat substring.
+			// Return char and concatenate substring.
 			return char.ToUpper(s[0]) + s.Substring(1);
 		}
 
 		/// <summary>UnixTimeStampToDateTime is a part of the Dota 2 helper class.
-		/// <para>Converst UTC time to legable local time.</para>
+		/// <para>Converts UTC time to local time.</para>
 		/// <seealso cref="https://stackoverflow.com/questions/249760/how-to-convert-unix-timestamp-to-datetime-and-vice-versa"/>
 		/// </summary>
 		public static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
 		{
-			// Unix timestamp is seconds past epoch
+			// Unix timestamps is seconds past epoch
 			System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
 			dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
 			return dtDateTime;
@@ -69,7 +69,7 @@ namespace DotaApi.Helpers
 		{//Found a cool way in PHP to convert steam ID so I adopted the method, credit
 		 //goes to original author, page here: https://gist.github.com/almirsarajcic/4664387
 
-			//there is a rare occurence when I get a null
+			//there is a rare occurrence when I get a null
 			//steamid and that is why we are using try/catch
 			try
 			{
@@ -124,7 +124,7 @@ namespace DotaApi.Helpers
 		/// </summary>
 		public static string SteamIDConverter64to32(string SteamID)
 		{
-			//there is a rare occurence when I get a null
+			//there is a rare occurrence when I get a null
 			//steamid and that is why we are using try/catch
 			try
 			{

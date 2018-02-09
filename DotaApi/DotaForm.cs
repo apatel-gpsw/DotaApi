@@ -28,7 +28,7 @@ namespace DotaApi
 
 		public static void BuildMatchData()
 		{
-			//parsing abilites list and storing
+			//parsing abilities list and storing
 			//in memory.
 			//var abilitiestext = File.ReadAllLines(Common.abilities_txt_path);
 			//var abilities = AbilitiesClass.ParseAbilityText(abilitiestext);

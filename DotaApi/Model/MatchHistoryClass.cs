@@ -7,14 +7,14 @@ namespace DotaApi.Model
 {
 	public class MatchHistory
 	{
-		/// <summary>Gets the latest (upto) 100 matches (so far, atleast for me during time of writing this 02-28-15).
+		/// <summary>Gets the latest (up to) 100 matches (so far, at least for me during time of writing this 02-28-15).
 		/// <seealso cref="http://uglyvpn.com/"/>
 		/// </summary>
 		public static List<Match> GetMatchHistory()
 		{
 			//to do
 			//create a player class to hold more information regarding the individual
-			//players including abilites/build info
+			//players including abilities/build info
 
 			//we get a list of the latest heroes
 			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
@@ -25,7 +25,7 @@ namespace DotaApi.Model
 			//I wanted to return the object with whatever it has
 			List<Match> _matches = new List<Match>();
 
-			//download the resposne
+			//download the response
 			string response = GetWebResponse.DownloadSteamAPIString(Common.matchhistoryUrl, Common.API);
 
 
@@ -91,7 +91,7 @@ namespace DotaApi.Model
 		{
 			//to do
 			//create a player class to hold more information regarding the individual
-			//players including abilites/build info
+			//players including abilities/build info
 
 			//we get a list of the latest heroes
 			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
@@ -103,7 +103,7 @@ namespace DotaApi.Model
 
 			List<MatchDetails.MatchDetailsResult> matchlist = new List<MatchDetails.MatchDetailsResult>();
 
-			//download the resposne
+			//download the response
 			string response = GetWebResponse.DownloadSteamAPIString(Common.matchhistorybyseqUrl, Common.API + "&start_at_match_seq_num=" + matchseqnumb + "&matches_requested=" + requestedmatches);
 
 
