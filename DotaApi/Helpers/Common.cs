@@ -13,7 +13,7 @@ namespace DotaApi.Helpers
 		public static string abilities_txt_path = @"C:\dota\npc_abilities.txt";
 
 
-		//steam urls to get json data
+		//steam url to get json data
 		public static string matchhistoryUrl = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=";
 		public static string herosUrl = @"https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=";
 		public static string matchdetailsUrl = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?&key=";

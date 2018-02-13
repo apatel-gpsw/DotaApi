@@ -34,7 +34,7 @@ namespace DotaApi
 			//var abilities = AbilitiesClass.ParseAbilityText(abilitiestext);
 
 			//lets parse items.txt and store this data into
-			//memory so we can make the associatation
+			//memory so we can make the association
 			//for match details.
 			string[] itemstext = File.ReadAllLines(Common.items_txt_path);
 			List<ItemsClass.Item> items = ItemsClass.ParseItemsText(itemstext);

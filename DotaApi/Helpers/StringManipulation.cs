@@ -66,11 +66,12 @@ namespace DotaApi.Helpers
 		/// <seealso cref="https://gist.github.com/almirsarajcic/4664387"/>
 		/// </summary>
 		public static string SteamIDConverter(string SteamAccountID)
-		{//Found a cool way in PHP to convert steam ID so I adopted the method, credit
-		 //goes to original author, page here: https://gist.github.com/almirsarajcic/4664387
+		{
+			//Found a cool way in PHP to convert steam ID so I adopted the method, credit
+			//goes to original author, page here: https://gist.github.com/almirsarajcic/4664387
 
 			//there is a rare occurrence when I get a null
-			//steamid and that is why we are using try/catch
+			//steam-id and that is why we are using try/catch
 			try
 			{
 				//this is our converted id object which will be returned
@@ -125,7 +126,7 @@ namespace DotaApi.Helpers
 		public static string SteamIDConverter64to32(string SteamID)
 		{
 			//there is a rare occurrence when I get a null
-			//steamid and that is why we are using try/catch
+			//steam-id and that is why we are using try/catch
 			try
 			{
 				decimal steamidDec = Convert.ToDecimal(SteamID.Substring(3));

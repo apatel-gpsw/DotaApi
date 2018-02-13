@@ -7,7 +7,7 @@ namespace DotaApi.Model
 {
 	public class MatchHistory
 	{
-		/// <summary>Gets the latest (up to) 100 matches (so far, at least for me during time of writing this 02-28-15).
+		/// <summary>Gets the latest (up to) 100 matches.
 		/// <seealso cref="http://uglyvpn.com/"/>
 		/// </summary>
 		public static List<Match> GetMatchHistory()
@@ -21,7 +21,7 @@ namespace DotaApi.Model
 
 			//create a container to store all of matches with everything
 			//cleaned up
-			//I create it up here because if If I hit a exception
+			//I create it up here because if I hit a exception
 			//I wanted to return the object with whatever it has
 			List<Match> _matches = new List<Match>();
 
@@ -97,10 +97,6 @@ namespace DotaApi.Model
 			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
 
 			//create a container to store all of matches with everything
-			//cleaned up
-			//I create it up here because if If I hit a exception
-			//I wanted to return the object with whatever it has
-
 			List<MatchDetails.MatchDetailsResult> matchlist = new List<MatchDetails.MatchDetailsResult>();
 
 			//download the response
