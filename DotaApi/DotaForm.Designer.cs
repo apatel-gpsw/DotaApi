@@ -8,7 +8,7 @@
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
@@ -28,34 +28,34 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-			this.SuspendLayout();
+			dgView1 = new System.Windows.Forms.DataGridView();
+			((System.ComponentModel.ISupportInitialize)(dgView1)).BeginInit();
+			SuspendLayout();
 			//
 			// dataGridView1
 			//
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(12, 41);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(720, 331);
-			this.dataGridView1.TabIndex = 0;
+			dgView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dgView1.Location = new System.Drawing.Point(12, 41);
+			dgView1.Name = "dataGridView1";
+			dgView1.Size = new System.Drawing.Size(720, 331);
+			dgView1.TabIndex = 0;
 			//
 			// DotaForm
 			//
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(744, 384);
-			this.Controls.Add(this.dataGridView1);
-			this.Name = "DotaForm";
-			this.Text = "Match Details";
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			this.ResumeLayout(false);
+			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(744, 384);
+			Controls.Add(dgView1);
+			Name = "DotaForm";
+			Text = "Match Details";
+			((System.ComponentModel.ISupportInitialize)(dgView1)).EndInit();
+			ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridView dgView1;
 	}
 }
 

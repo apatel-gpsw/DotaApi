@@ -4,25 +4,22 @@ using DotaApi.Helpers;
 
 namespace DotaApi.Model
 {
-	public class ItemsClass
+	public class Items
 	{
-
 		public class Item
 		{
-			public string name { get; set; }
-			public string id { get; set; }
-			public string castrange { get; set; }
-			public string castpoint { get; set; }
-			public string cooldown { get; set; }
-			public string manacost { get; set; }
-
+			public string Name { get; set; }
+			public string ID { get; set; }
+			public string CastRange { get; set; }
+			public string CastPoint { get; set; }
+			public string Cooldown { get; set; }
+			public string ManaCost { get; set; }
 			public string ItemCost { get; set; }
 			public string ItemShopTags { get; set; }
 			public string ItemQuality { get; set; }
 			public string ItemAliases { get; set; }
 			public string ItemStackable { get; set; }
 			public string ItemShareability { get; set; }
-
 			public string ItemPermanent { get; set; }
 			public string ItemInitialCharges { get; set; }
 			public string SideShop { get; set; }
@@ -31,73 +28,68 @@ namespace DotaApi.Model
 		}
 
 
-		public static List<ItemsClass.Item> ParseItemsText(string[] text)
+		public static List<Item> ParseItemsText(string[] text)
 		{
 			bool itemfound = false;
 
-			//list to hold our parsed items.
-			List<Model.ItemsClass.Item> items = new List<Model.ItemsClass.Item>();
+			// List to hold our parsed items.
+			List<Item> items = new List<Item>();
 
-			//this will be used to store this sectoion
-			//of the item.
+			// This will be used to store this section of the item.
 			List<string> curitem = new List<string>();
 
-			//item object will will be populating
-			Model.ItemsClass.Item item = new Model.ItemsClass.Item();
+			// Item object will be populating
+			Item item = new Item();
 
-			//lets go line by line to start parsing.
+			// Lets go line by line to start parsing.
 			foreach(string line in text)
 			{
-				//clean up the text, remove quotes.
+				// Clean up the text, remove quotes.
 				string line_noquotes = line.Replace("\"", "");
 				string trimmed_clean = line.Replace("\"", "").Replace("\t", "").Replace("_", " ").Trim();
 
-				//if line starts with item_ then
-				//this is where we will start capturing.
+				// If line starts with item_ then
+				// This is where we will start capturing.
 				if(line_noquotes.StartsWith("	item_"))
 				{
-					item = new Model.ItemsClass.Item();
+					item = new Item();
 					itemfound = true;
-					item.name = trimmed_clean.Replace("item ", "");
-					item.name = StringManipulation.UppercaseFirst(item.name);
+					item.Name = trimmed_clean.Replace("item ", "");
+					item.Name = StringManipulation.UppercaseFirst(item.Name);
 					curitem.Add(trimmed_clean);
 				}
 
-				//if we are on a current item then lets do
-				//some other operations to gather details
+				// If we are on a current item then lets do
+				// Some other operations to gather details
 				if(itemfound == true)
 				{
-					//parse ID
 					if(trimmed_clean.StartsWith("ID"))
 					{
-						item.id = trimmed_clean.Replace("ID", "").Split('/')[0];
+						item.ID = trimmed_clean.Replace("ID", "").Split('/')[0];
 						curitem.Add(line);
 					}
 
-					//parse cast range
 					if(trimmed_clean.StartsWith("AbilityCastRange"))
 					{
-						item.castrange = trimmed_clean.Replace("AbilityCastRange", "");
+						item.CastRange = trimmed_clean.Replace("AbilityCastRange", "");
 						curitem.Add(trimmed_clean);
 					}
 
-					//parse cast point
 					if(trimmed_clean.StartsWith("AbilityCastPoint"))
 					{
-						item.castpoint = trimmed_clean.Replace("AbilityCastPoint", "");
+						item.CastPoint = trimmed_clean.Replace("AbilityCastPoint", "");
 						curitem.Add(trimmed_clean);
 					}
 
-					//parse cast point
 					if(trimmed_clean.StartsWith("AbilityCooldown"))
 					{
-						item.cooldown = trimmed_clean.Replace("AbilityCooldown", "");
+						item.Cooldown = trimmed_clean.Replace("AbilityCooldown", "");
 						curitem.Add(trimmed_clean);
 					}
 
 					if(trimmed_clean.StartsWith("AbilityManaCost"))
 					{
-						item.manacost = trimmed_clean.Replace("AbilityManaCost", "");
+						item.ManaCost = trimmed_clean.Replace("AbilityManaCost", "");
 						curitem.Add(trimmed_clean);
 					}
 
@@ -106,7 +98,7 @@ namespace DotaApi.Model
 						item.ItemCost = trimmed_clean.Replace("ItemCost", "");
 						curitem.Add(trimmed_clean);
 					}
-					//
+
 					if(trimmed_clean.StartsWith("ItemShopTags"))
 					{
 						item.ItemShopTags = trimmed_clean.Replace("ItemShopTags", "");
@@ -151,18 +143,13 @@ namespace DotaApi.Model
 					//end current item, save to list
 					if(trimmed_clean.StartsWith("//="))
 					{
-
-
 						//add to our list of items/
 						items.Add(item);
 						curitem.Add(trimmed_clean);
 						itemfound = false;
 					}
-
 				}
-
 			}
-
 			return items;
 		}
 	}

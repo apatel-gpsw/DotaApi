@@ -11,19 +11,20 @@ namespace DotaApi
 		public DotaForm()
 		{
 			InitializeComponent();
-			dataGridView1.ColumnCount = 3;
-			dataGridView1.Columns[0].Name = "Product ID";
-			dataGridView1.Columns[1].Name = "Product Name";
-			dataGridView1.Columns[2].Name = "Product Price";
+			dgView1.ColumnCount = 3;
+			dgView1.Columns[0].Name = "Product ID";
+			dgView1.Columns[1].Name = "Product Name";
+			dgView1.Columns[2].Name = "Product Price";
 
 			string[] row = new string[] { "1", "Product 1", "1000" };
-			dataGridView1.Rows.Add(row);
+			dgView1.Rows.Add(row);
 			row = new string[] { "2", "Product 2", "2000" };
-			dataGridView1.Rows.Add(row);
+			dgView1.Rows.Add(row);
 			row = new string[] { "3", "Product 3", "3000" };
-			dataGridView1.Rows.Add(row);
+			dgView1.Rows.Add(row);
 			row = new string[] { "4", "Product 4", "4000" };
-			dataGridView1.Rows.Add(row);
+			dgView1.Rows.Add(row);
+			BuildMatchData();
 		}
 
 		public static void BuildMatchData()
@@ -37,7 +38,7 @@ namespace DotaApi
 			//memory so we can make the association
 			//for match details.
 			string[] itemstext = File.ReadAllLines(Common.items_txt_path);
-			List<ItemsClass.Item> items = ItemsClass.ParseItemsText(itemstext);
+			List<Items.Item> items = Items.ParseItemsText(itemstext);
 
 			//Get match details for match id 1277955116.
 			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(1277955116, items);
