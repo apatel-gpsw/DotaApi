@@ -44,7 +44,7 @@ namespace DotaApi
 			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(1277955116, items);
 
 
-			var nextmatches = MatchHistory.GetMatchHistoryBySeqNum(matchdetails.match_seq_num, 25, items);
+			var nextmatches = MatchHistory.GetMatchHistoryBySeqNum(matchdetails.Match_Seq_Num, 25, items);
 
 
 

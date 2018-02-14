@@ -41,9 +41,11 @@ namespace DotaApi.Helpers
 			// Found a cool way in PHP to convert steam ID so I adopted the method, credit
 			// goes to original author, page here: https://gist.github.com/almirsarajcic/4664387
 
+			if(string.IsNullOrEmpty(SteamAccountID))
+				return null;
 			// If the length of the SteamID is 17 characters
 			// we will assume it is a 64 id
-			if(SteamAccountID.Length == 17)
+			else if(SteamAccountID.Length == 17)
 				return SteamIDConverter64to32(SteamAccountID);
 			else
 				return SteamIDConverter32to64(SteamAccountID);

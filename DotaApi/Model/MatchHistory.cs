@@ -34,18 +34,18 @@ namespace DotaApi.Model
 				// Start looking up details on first match
 				Match Match = new Match();
 
-				Console.WriteLine("     Match ID: {0}", match.MatchID);
-				Console.WriteLine("     Lobby Type: {0} ({1})", LobbyTypes.GetLobbyType(match.lobby_type), match.lobby_type);
-				Console.WriteLine("     MatchSeqNum: {0}", match.MatchSeqNum);
+				Console.WriteLine("     Match ID: {0}", match.Match_ID);
+				Console.WriteLine("     Lobby Type: {0} ({1})", LobbyTypes.GetLobbyType(match.Lobby_Type), match.Lobby_Type);
+				Console.WriteLine("     MatchSeqNum: {0}", match.Match_Seq_Num);
 
 
-				Match.MatchID = match.MatchID;
-				Match.lobby_type = match.lobby_type;
-				Match.LobbyType = LobbyTypes.GetLobbyType(match.lobby_type);
-				Match.MatchSeqNum = match.MatchSeqNum;
+				Match.Match_ID = match.Match_ID;
+				Match.Lobby_Type = match.Lobby_Type;
+				Match.LobbyType = LobbyTypes.GetLobbyType(match.Lobby_Type);
+				Match.Match_Seq_Num = match.Match_Seq_Num;
 				Match.Players = match.Players;
-				Match.start_time = match.start_time;
-				Match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.start_time);
+				Match.Start_Time = match.Start_Time;
+				Match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.Start_Time);
 				Console.WriteLine("     Start Time: {0}", Match.StartTime);
 
 				Console.WriteLine("     Real Players: {0}", match.Players.Count.ToString());
@@ -53,13 +53,13 @@ namespace DotaApi.Model
 				foreach(var player in match.Players)
 				{
 					Console.WriteLine("         Player {0} of {1}", playercountInt, match.Players.Count);
-					string name = Common.ConvertHeroFromID(player.HeroID, heroes);
+					string name = Common.ConvertHeroFromID(player.Hero_ID, heroes);
 					player.Name = name;
-					player.SteamVanityName = SteamAccount.GetSteamAccount(player.AccountID).PlayerName;
+					player.SteamVanityName = SteamAccount.GetSteamAccount(player.Account_ID).PlayerName;
 
 					Console.WriteLine("             Name: {0}", name);
-					Console.WriteLine("             Hero ID: {0}", player.HeroID);
-					Console.WriteLine("             Account ID: {0}", player.AccountID);
+					Console.WriteLine("             Hero ID: {0}", player.Hero_ID);
+					Console.WriteLine("             Account ID: {0}", player.Account_ID);
 					Console.WriteLine("             Vanity Name: {0}", player.SteamVanityName);
 
 					playercountInt++;
@@ -99,7 +99,7 @@ namespace DotaApi.Model
 			MatchRootObject ourResponse = JsonConvert.DeserializeObject<MatchRootObject>(response);
 			foreach(var match in ourResponse.Result.Matches)
 			{
-				var m = MatchDetails.GetMatchDetail(match.MatchID, DotaItems);
+				var m = MatchDetails.GetMatchDetail(match.Match_ID, DotaItems);
 				matchlist.Add(m);
 			}
 			return matchlist;
@@ -108,20 +108,20 @@ namespace DotaApi.Model
 
 	public class Player
 	{
-		public string AccountID { get; set; }
-		public int PlayerSlot { get; set; }
-		public int HeroID { get; set; }
+		public string Account_ID { get; set; }
+		public int Player_Slot { get; set; }
+		public int Hero_ID { get; set; }
 		public string Name { get; set; }
 		public string SteamVanityName { get; set; }
 	}
 
 	public class Match
 	{
-		public int MatchID { get; set; }
-		public int MatchSeqNum { get; set; }
-		public int start_time { get; set; }
+		public int Match_ID { get; set; }
+		public int Match_Seq_Num { get; set; }
+		public int Start_Time { get; set; }
 		public DateTime StartTime { get; set; }
-		public int lobby_type { get; set; }
+		public int Lobby_Type { get; set; }
 		public string LobbyType { get; set; }
 		public List<Player> Players { get; set; }
 		public int HumanPlayers { get; set; }
@@ -130,9 +130,9 @@ namespace DotaApi.Model
 	public class Result
 	{
 		public int Status { get; set; }
-		public int NumResults { get; set; }
-		public int TotalResults { get; set; }
-		public int ResultsRemaining { get; set; }
+		public int Num_Results { get; set; }
+		public int Total_Results { get; set; }
+		public int Results_Remaining { get; set; }
 		public List<Match> Matches { get; set; }
 	}
 

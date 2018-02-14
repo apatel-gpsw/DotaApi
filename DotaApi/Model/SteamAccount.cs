@@ -14,17 +14,21 @@ namespace DotaApi.Model
 		/// </summary>
 		public static Player GetSteamAccount(string SteamID)
 		{
-			string response = string.Empty;
+			Player player = new Player();
+
+			if(string.IsNullOrEmpty(SteamID))
+				return player;
+
+			string webResponse = string.Empty;
 			var steamaccount = new RootObject();
-			response = GetWebResponse.DownloadSteamAPIString(Common.steamaccountUrl, (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
+			webResponse = GetWebResponse.DownloadSteamAPIString(Common.steamaccountUrl, (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
 
-			RootObject ourResponse = JsonConvert.DeserializeObject<RootObject>(response);
-			Player Player = new Player();
+			RootObject jObj = JsonConvert.DeserializeObject<RootObject>(webResponse);
 
-			if(ourResponse.Response.Players.Count != 0)
-				Player = ourResponse.Response.Players[0];
+			if(jObj.Response.Players.Count > 0)
+				player = jObj.Response.Players[0];
 
-			return Player;
+			return player;
 		}
 
 		public class Player
