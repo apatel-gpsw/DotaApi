@@ -59,9 +59,10 @@
     <Compile Include="Helpers\Common.cs" />
     <Compile Include="Helpers\GetWebResponse.cs" />
     <Compile Include="Helpers\StringManipulation.cs" />
-    <Compile Include="Model\Abilities.cs" />
+    <Compile Include="Model\Ability.cs" />
     <Compile Include="Model\Heros.cs" />
-    <Compile Include="Model\Items.cs" />
+    <Compile Include="Model\ISearchableDictionary.cs" />
+    <Compile Include="Model\Item.cs" />
     <Compile Include="Model\LobbyTypes.cs" />
     <Compile Include="Model\MatchDetails.cs" />
     <Compile Include="Model\MatchHistory.cs" />

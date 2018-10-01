@@ -55,7 +55,7 @@ namespace DotaApi.Model
 			return resultHeroes;
 		}
 
-		public class Hero
+		public class Hero : ISearchableDictionary
 		{
 			public string Name { get; set; }
 			public string OrigName { get; set; }

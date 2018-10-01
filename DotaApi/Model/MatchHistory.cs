@@ -28,7 +28,7 @@ namespace DotaApi.Model
 			MatchRootObject ourResponse = JsonConvert.DeserializeObject<MatchRootObject>(response);
 			Console.WriteLine("Total Matches {0}", ourResponse.Result.Matches.Count.ToString());
 			int matchcountInt = 0;
-			foreach(var match in ourResponse.Result.Matches)
+			foreach (var match in ourResponse.Result.Matches)
 			{
 				Console.WriteLine(" Match {0} of {1}", matchcountInt, ourResponse.Result.Matches.Count);
 				// Start looking up details on first match
@@ -50,10 +50,10 @@ namespace DotaApi.Model
 
 				Console.WriteLine("     Real Players: {0}", match.Players.Count.ToString());
 				int playercountInt = 1;
-				foreach(var player in match.Players)
+				foreach (var player in match.Players)
 				{
 					Console.WriteLine("         Player {0} of {1}", playercountInt, match.Players.Count);
-					string name = Common.ConvertHeroIdToName(player.Hero_ID, heroes);
+					string name = Common.ConvertIDtoName(player.Hero_ID, heroes);
 					player.Name = name;
 					player.SteamVanityName = SteamAccount.GetSteamAccount(player.Account_ID).PlayerName;
 
@@ -77,7 +77,7 @@ namespace DotaApi.Model
 		/// <summary>Used to get the matches in the order which they were recorded (i.e. sorted ascending by match_seq_num).
 		/// This means that the first match on the first page of results returned by the call will be the very first public mm-match recorded in the stats.
 		/// </summary>
-		public static List<MatchDetails.MatchDetailsResult> GetMatchHistoryBySeqNum(int matchseqnumb, int requestedmatches, List<Items.Item> DotaItems)
+		public static List<MatchDetails.MatchDetailsResult> GetMatchHistoryBySeqNum(int matchseqnumb, int requestedmatches, List<Item> DotaItems)
 		{
 			// to do
 			// create a player class to hold more information regarding the individual
@@ -97,7 +97,7 @@ namespace DotaApi.Model
 			// this is when we parse all of the json data into
 			// our custom object classes
 			MatchRootObject ourResponse = JsonConvert.DeserializeObject<MatchRootObject>(response);
-			foreach(var match in ourResponse.Result.Matches)
+			foreach (var match in ourResponse.Result.Matches)
 			{
 				var m = MatchDetails.GetMatchDetail(match.Match_ID, DotaItems);
 				matchlist.Add(m);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
 
@@ -13,7 +12,7 @@ namespace DotaApi.Model
 		/// <summary>
 		/// Gets match details for a single match, this includes player builds and details. Requires "MatchClass".
 		/// </summary>
-		public static MatchDetailsResult GetMatchDetail(int matchid, List<Items.Item> DotaItems)
+		public static MatchDetailsResult GetMatchDetail(int matchid, List<Item> DotaItems)
 		{
 			// to do
 			// get match details
@@ -23,9 +22,7 @@ namespace DotaApi.Model
 			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
 
 			// Get list of abilities
-			// parsing abilities list and storing in memory.
-			var abilitiestext = File.ReadAllLines(Common.ABILITY_FILE);
-			var abilities = Abilities.ParseAbilityText(abilitiestext);
+			var abilities = Common.ParseAbilityText();
 
 			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHDETAILSURL, Common.API + "&match_id=" + matchid);
 
@@ -46,17 +43,17 @@ namespace DotaApi.Model
 			foreach (var player in detail.result.Players)
 			{
 				Console.WriteLine("Account ID: {0}", player.Account_ID);
-				player.Name = Common.ConvertHeroIdToName(player.Hero_ID, heroes);
+				player.Name = Common.ConvertIDtoName(player.Hero_ID, heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
 				// getting item names based on the id number
-				player.Item0 = Common.ConvertItemIDtoName(player.Item_0.ToString(), DotaItems);
-				player.Item1 = Common.ConvertItemIDtoName(player.Item_1.ToString(), DotaItems).Replace("item ", "");
-				player.Item2 = Common.ConvertItemIDtoName(player.Item_2.ToString(), DotaItems);
-				player.Item3 = Common.ConvertItemIDtoName(player.Item_3.ToString(), DotaItems);
-				player.Item4 = Common.ConvertItemIDtoName(player.Item_4.ToString(), DotaItems);
-				player.Item5 = Common.ConvertItemIDtoName(player.Item_5.ToString(), DotaItems);
+				player.Item0 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_0.ToString()), DotaItems);
+				player.Item1 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_1.ToString()), DotaItems).Replace("item ", "");
+				player.Item2 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_2.ToString()), DotaItems);
+				player.Item3 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_3.ToString()), DotaItems);
+				player.Item4 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_4.ToString()), DotaItems);
+				player.Item5 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_5.ToString()), DotaItems);
 
 				var steamaccount = SteamAccount.GetSteamAccount(player.Account_ID);
 				player.SteamVanityName = steamaccount.PlayerName;
@@ -93,7 +90,7 @@ namespace DotaApi.Model
 						ability.ID = ability.Ability;
 
 						// map the id to a readable name.
-						ability.Name = Common.ConvertAbilityIDtoName(ability.Ability, abilities);
+						ability.Name = Common.ConvertIDtoName(Convert.ToInt32(ability.Ability), abilities);
 
 						// add the upgrade seconds to the original start
 						// time to get the upgrade time.
@@ -106,7 +103,7 @@ namespace DotaApi.Model
 				else
 				{
 					Console.WriteLine("Ability Upgrade Path");
-					Console.WriteLine(" No abilities data");
+					Console.WriteLine("No abilities data");
 				}
 			}
 			return match;
