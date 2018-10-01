@@ -24,29 +24,29 @@ namespace DotaApi.Model
 
 			// Get list of abilities
 			// parsing abilities list and storing in memory.
-			var abilitiestext = File.ReadAllLines(Common.abilities_txt_path);
+			var abilitiestext = File.ReadAllLines(Common.ABILITY_FILE);
 			var abilities = Abilities.ParseAbilityText(abilitiestext);
 
-			string response = GetWebResponse.DownloadSteamAPIString(Common.matchdetailsUrl, Common.API + "&match_id=" + matchid);
+			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHDETAILSURL, Common.API + "&match_id=" + matchid);
 
 			MatchDetailsRootObject detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
 			MatchDetailsResult match = detail.result;
 
-			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.result.start_time);
+			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.result.Start_Time);
 
 			Console.WriteLine("Match ID: {0}", match.Match_ID);
 			Console.WriteLine("Match SeqNum: {0}", match.Match_Seq_Num);
-			Console.WriteLine("Real Players: {0}", match.Human_Players);
+			Console.WriteLine("Human Players: {0}", match.Human_Players);
 			Console.WriteLine("Start Time: {0}", match.StartTime);
-			match.Lobbytype = LobbyTypes.GetLobbyType(match.lobby_type);
+			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Yype);
 
 			var onePlayer = detail.result.Players[0];
 			DataTable t = new DataTable();
 
-			foreach(var player in detail.result.Players)
+			foreach (var player in detail.result.Players)
 			{
 				Console.WriteLine("Account ID: {0}", player.Account_ID);
-				player.Name = Common.ConvertHeroFromID(player.HeroID, heroes);
+				player.Name = Common.ConvertHeroIdToName(player.Hero_ID, heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
@@ -83,10 +83,10 @@ namespace DotaApi.Model
 				// might get kicked out before they get a chance.
 				// In this type of situation, we must check for null
 				// before continuing.
-				if(player.Ability_Upgrades != null)
+				if (player.Ability_Upgrades != null)
 				{
 					Console.WriteLine("Ability Upgrade Path");
-					foreach(var ability in player.Ability_Upgrades)
+					foreach (var ability in player.Ability_Upgrades)
 					{
 						// clean up the object a bit and put
 						// id where it should be.
@@ -130,7 +130,7 @@ namespace DotaApi.Model
 			public string Steamid64 { get; set; }
 			public string Steamid32 { get; set; }
 			public int PlayerSlot { get; set; }
-			public int HeroID { get; set; }
+			public int Hero_ID { get; set; }
 			public int Item_0 { get; set; }
 			public string Item0 { get; set; }
 			public int Item_1 { get; set; }
@@ -165,7 +165,7 @@ namespace DotaApi.Model
 			public List<Player> Players { get; set; }
 			public bool Radiant_Win { get; set; }
 			public int Duration { get; set; }
-			public int start_time { get; set; }
+			public int Start_Time { get; set; }
 			public DateTime StartTime { get; set; }
 			public int Match_ID { get; set; }
 			public int Match_Seq_Num { get; set; }
@@ -175,7 +175,7 @@ namespace DotaApi.Model
 			public int Barracks_Status_Dire { get; set; }
 			public int Cluster { get; set; }
 			public int First_Blood_Time { get; set; }
-			public int lobby_type { get; set; }
+			public int Lobby_Yype { get; set; }
 			public string Lobbytype { get; set; }
 			public int Human_Players { get; set; }
 			public int Leagueid { get; set; }

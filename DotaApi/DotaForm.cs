@@ -37,7 +37,7 @@ namespace DotaApi
 			//lets parse items.txt and store this data into
 			//memory so we can make the association
 			//for match details.
-			string[] itemstext = File.ReadAllLines(Common.items_txt_path);
+			string[] itemstext = File.ReadAllLines(Common.ITEM_FILE);
 			List<Items.Item> items = Items.ParseItemsText(itemstext);
 
 			//Get match details for match id 1277955116.

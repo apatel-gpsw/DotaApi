@@ -12,46 +12,47 @@ namespace DotaApi.Model
 		/// </summary>
 		public static List<Hero> GetHeroes(bool verbose)
 		{
-			string response = string.Empty;
-			response = GetWebResponse.DownloadSteamAPIString(Common.herosUrl, Common.API);
-
-			HeroesObject ourResponse = JsonConvert.DeserializeObject<HeroesObject>(response);
-
-			//we clean up the names and stuff here.
-			List<Hero> Heroes = new List<Hero>();
+			string response = GetWebResponse.DownloadSteamAPIString(Common.HEROSURL, Common.API);
+			HeroesObject heroesObject = JsonConvert.DeserializeObject<HeroesObject>(response);
+			List<Hero> resultHeroes = new List<Hero>();
 
 			//if verbose flag is set to true, then show console
 			//message.
-			if(verbose == true)
-				Console.WriteLine("Count of Heroes {0}", ourResponse.Result.Heroes.Count);
+			if (verbose == true)
+				Console.WriteLine("Count of Heroes {0}", heroesObject.Result.Heroes.Count);
 
 			int herocountInt = 1;
 
 			//hero id 0 is private profile i think?
-			Hero Hero = new Hero();
-			Hero.ID = 0;
-			Hero.Name = "Npc_dota_hero_Private Profile";
-			if(verbose == true)
-			{ Console.WriteLine("Hero orig-name: {0}", Hero.Name); }
-			Heroes.Add(Hero);
-
-			foreach(var hero in ourResponse.Result.Heroes)
+			Hero Hero = new Hero
 			{
-				if(verbose == true)
-					Console.Write("{0} of {1}. Hero orig-name: {2}|", herocountInt, ourResponse.Result.Heroes.Count, hero.Name);
+				ID = 0,
+				Name = "Npc_dota_hero_Private Profile"
+			};
+			if (verbose == true)
+				Console.WriteLine("Hero orig-name: {0}", Hero.Name);
 
-				Hero = new Hero();
-				Hero.Name = StringManipulation.UppercaseFirst(hero.Name.Replace("npc_dota_hero_", "").Replace("_", " "));
-				Hero.ID = hero.ID;
-				Hero.OrigName = hero.Name;
-				if(verbose == true)
-				{ Console.WriteLine(" cleaned: {0}", Hero.Name); }
-				Heroes.Add(Hero);
+			resultHeroes.Add(Hero);
+
+			foreach (var hero in heroesObject.Result.Heroes)
+			{
+				if (verbose == true)
+					Console.Write("{0} of {1}. Hero orig-name: {2}|", herocountInt, heroesObject.Result.Heroes.Count, hero.Name);
+
+				Hero = new Hero
+				{
+					Name = StringManipulation.UppercaseFirst(hero.Name.Replace("npc_dota_hero_", "").Replace("_", " ")),
+					ID = hero.ID,
+					OrigName = hero.Name
+				};
+				if (verbose == true)
+					Console.WriteLine(" cleaned: {0}", Hero.Name);
+
+				resultHeroes.Add(Hero);
 				herocountInt++;
 			}
 
-			return Heroes;
-
+			return resultHeroes;
 		}
 
 		public class Hero

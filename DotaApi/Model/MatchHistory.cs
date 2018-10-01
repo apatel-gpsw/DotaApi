@@ -21,7 +21,7 @@ namespace DotaApi.Model
 			List<Match> Matches = new List<Match>();
 
 			// download the response
-			string response = GetWebResponse.DownloadSteamAPIString(Common.matchhistoryUrl, Common.API);
+			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHHISTORYURL, Common.API);
 
 			// Serializing json data to our class
 			// This is when we parse all of the json data into our custom object classes
@@ -53,7 +53,7 @@ namespace DotaApi.Model
 				foreach(var player in match.Players)
 				{
 					Console.WriteLine("         Player {0} of {1}", playercountInt, match.Players.Count);
-					string name = Common.ConvertHeroFromID(player.Hero_ID, heroes);
+					string name = Common.ConvertHeroIdToName(player.Hero_ID, heroes);
 					player.Name = name;
 					player.SteamVanityName = SteamAccount.GetSteamAccount(player.Account_ID).PlayerName;
 
@@ -90,7 +90,7 @@ namespace DotaApi.Model
 			List<MatchDetails.MatchDetailsResult> matchlist = new List<MatchDetails.MatchDetailsResult>();
 
 			// download the response
-			string response = GetWebResponse.DownloadSteamAPIString(Common.matchhistorybyseqUrl, Common.API + "&start_at_match_seq_num=" + matchseqnumb + "&matches_requested=" + requestedmatches);
+			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHHISTORYBYSEQURL, Common.API + "&start_at_match_seq_num=" + matchseqnumb + "&matches_requested=" + requestedmatches);
 
 
 			// serializing json data to our class

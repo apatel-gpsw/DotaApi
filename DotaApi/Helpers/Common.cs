@@ -9,26 +9,26 @@ namespace DotaApi.Helpers
 		// key from steam and replace below.
 		public static string API = "23CEC905617913D3710DC832621110F3";
 
-		public static string items_txt_path = @"C:\dota\items.txt";
-		public static string abilities_txt_path = @"C:\dota\npc_abilities.txt";
+		public static string ITEM_FILE = @"D:\git\DotaApi\items.txt";
+		public static string ABILITY_FILE = @"D:\git\DotaApi\npc_abilities.txt";
 
-		// steam url to get json data
-		public static string matchhistoryUrl = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=";
-		public static string herosUrl = @"https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=";
-		public static string matchdetailsUrl = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?&key=";
-		public static string steamaccountUrl = @"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=";
-		public static string matchhistorybyseqUrl = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key=";
+		// steam urls to get json data
+		public static string MATCHHISTORYURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=";
+		public static string HEROSURL = @"https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=";
+		public static string MATCHDETAILSURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?&key=";
+		public static string STEAMACCOUNTURL = @"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=";
+		public static string MATCHHISTORYBYSEQURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key=";
 
 		/// <summary>
 		/// Loops through the list of heroes and returns hero's name.
 		/// </summary>
-		public static string ConvertHeroFromID(int id, List<Heroes.Hero> heroes)
+		public static string ConvertHeroIdToName(int id, List<Heroes.Hero> heroes)
 		{
 			string heronamestr = string.Empty;
 
-			foreach(var hero in heroes)
+			foreach (var hero in heroes)
 			{
-				if(hero.ID == id)
+				if (hero.ID == id)
 				{
 					heronamestr = StringManipulation.UppercaseFirst(hero.Name);
 					break;
@@ -43,9 +43,9 @@ namespace DotaApi.Helpers
 		public static string ConvertItemIDtoName(string id, List<Items.Item> DotaItems)
 		{
 			string itemname = string.Empty;
-			foreach(var item in DotaItems)
+			foreach (var item in DotaItems)
 			{
-				if(item.ID == id)
+				if (item.ID == id)
 				{
 					itemname = StringManipulation.UppercaseFirst(item.Name);
 					break;
@@ -60,9 +60,9 @@ namespace DotaApi.Helpers
 		public static string ConvertAbilityIDtoName(string id, List<Abilities.Ability> Abilities)
 		{
 			string abilityname = string.Empty;
-			foreach(var ability in Abilities)
+			foreach (var ability in Abilities)
 			{
-				if(ability.ID == id)
+				if (ability.ID == id)
 				{
 					abilityname = StringManipulation.UppercaseFirst(ability.Name);
 					break;
