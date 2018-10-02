@@ -77,7 +77,7 @@ namespace DotaApi.Model
 		/// <summary>Used to get the matches in the order which they were recorded (i.e. sorted ascending by match_seq_num).
 		/// This means that the first match on the first page of results returned by the call will be the very first public mm-match recorded in the stats.
 		/// </summary>
-		public static List<MatchDetails.MatchDetailsResult> GetMatchHistoryBySeqNum(int matchseqnumb, int requestedmatches, List<Item> DotaItems)
+		public static List<MatchDetails.MatchDetailsResult> GetMatchHistoryBySeqNum(long matchseqnumb, int requestedmatches, List<Item> DotaItems)
 		{
 			// to do
 			// create a player class to hold more information regarding the individual
@@ -117,8 +117,8 @@ namespace DotaApi.Model
 
 	public class Match
 	{
-		public int Match_ID { get; set; }
-		public int Match_Seq_Num { get; set; }
+		public long Match_ID { get; set; }
+		public long Match_Seq_Num { get; set; }
 		public int Start_Time { get; set; }
 		public DateTime StartTime { get; set; }
 		public int Lobby_Type { get; set; }

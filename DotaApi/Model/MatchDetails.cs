@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
 
@@ -12,24 +13,24 @@ namespace DotaApi.Model
 		/// <summary>
 		/// Gets match details for a single match, this includes player builds and details. Requires "MatchClass".
 		/// </summary>
-		public static MatchDetailsResult GetMatchDetail(int matchid, List<Item> DotaItems)
+		public static MatchDetailsResult GetMatchDetail(long matchid, List<Item> DotaItems)
 		{
 			// to do
 			// get match details
 			// Uri is: https:// api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=27110133&key=<key>
 
 			// we get a list of the latest heroes
-			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
+			var heroes = Heroes.GetHeroes(false);
 
 			// Get list of abilities
 			var abilities = Common.ParseAbilityText();
 
 			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHDETAILSURL, Common.API + "&match_id=" + matchid);
 
-			MatchDetailsRootObject detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
-			MatchDetailsResult match = detail.result;
+			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
+			MatchDetailsResult match = detail.Result;
 
-			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.result.Start_Time);
+			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.Result.Start_Time);
 
 			Console.WriteLine("Match ID: {0}", match.Match_ID);
 			Console.WriteLine("Match SeqNum: {0}", match.Match_Seq_Num);
@@ -37,10 +38,10 @@ namespace DotaApi.Model
 			Console.WriteLine("Start Time: {0}", match.StartTime);
 			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Yype);
 
-			var onePlayer = detail.result.Players[0];
+			var onePlayer = detail.Result.Players[0];
 			DataTable t = new DataTable();
 
-			foreach (var player in detail.result.Players)
+			foreach (var player in detail.Result.Players)
 			{
 				Console.WriteLine("Account ID: {0}", player.Account_ID);
 				player.Name = Common.ConvertIDtoName(player.Hero_ID, heroes);
@@ -57,22 +58,31 @@ namespace DotaApi.Model
 
 				var steamaccount = SteamAccount.GetSteamAccount(player.Account_ID);
 				player.SteamVanityName = steamaccount.PlayerName;
-				Console.WriteLine("Vanity Name: {0}", player.SteamVanityName);
-				Console.WriteLine(" {0}", player.Name);
-				Console.WriteLine("     K/D/A: {0}/{1}/{2}", player.Kills, player.Deaths, player.Assists);
-				Console.WriteLine("     CS: {0}/{1}", player.Last_Hits, player.Denies);
-				Console.WriteLine("\tGold");
-				Console.WriteLine(" \tGPM: {0}g", player.Gold_Per_Min);
-				Console.WriteLine(" \tGoldSpent: {0}g", player.Gold_Spent);
-				Console.WriteLine(" \tEnd of game: {0}g", player.Gold);
 
-				Console.WriteLine("Items");
-				Console.WriteLine(" Slot 0: {0}", player.Item0);
-				Console.WriteLine(" Slot 1: {0}", player.Item1);
-				Console.WriteLine(" Slot 2: {0}", player.Item2);
-				Console.WriteLine(" Slot 3: {0}", player.Item3);
-				Console.WriteLine(" Slot 4: {0}", player.Item4);
-				Console.WriteLine(" Slot 5: {0}", player.Item5);
+				StringBuilder sb = new StringBuilder();
+
+				sb.AppendLine($"Vanity Name: {player.SteamVanityName}");
+				sb.AppendLine($"Hero: {player.Name}");
+				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
+				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
+				sb.AppendLine($"\tGold");
+				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
+				sb.AppendLine($"\tGold Spent: {player.Gold_Spent}");
+				sb.AppendLine($"\tEnd of game Gold: {player.Gold}");
+
+				sb.AppendLine("Items");
+				if (player.Item0 != null)
+					sb.Append($"Slot 0: {player.Item0} |");
+				if (player.Item1 != null)
+					sb.Append($" Slot 1: {player.Item1} |");
+				if (player.Item2 != null)
+					sb.Append($" Slot 2: {player.Item2} |");
+				if (player.Item3 != null)
+					sb.Append($" Slot 3: {player.Item3} |");
+				sb.Append($" Slot 4: {player.Item4} |");
+				if (player.Item4 != null)
+					sb.AppendLine($"Slot 5: {player.Item5}");
+				sb.AppendLine("Ability Upgrade Path");
 
 				// ability output
 				// In some scenarios a user might play the game
@@ -82,7 +92,6 @@ namespace DotaApi.Model
 				// before continuing.
 				if (player.Ability_Upgrades != null)
 				{
-					Console.WriteLine("Ability Upgrade Path");
 					foreach (var ability in player.Ability_Upgrades)
 					{
 						// clean up the object a bit and put
@@ -97,14 +106,14 @@ namespace DotaApi.Model
 						ability.UpgradeTime = match.StartTime.AddSeconds(ability.Time);
 
 						// output to screen
-						Console.WriteLine(" {0} upgraded at {1} @ {2}", ability.Name, ability.Level, ability.UpgradeTime);
+						sb.AppendLine($" {ability.Name} upgraded at {ability.Level} @ {ability.UpgradeTime}");
 					}
 				}
 				else
 				{
-					Console.WriteLine("Ability Upgrade Path");
-					Console.WriteLine("No abilities data");
+					sb.AppendLine("No abilities data");
 				}
+				Console.Write(sb.ToString());
 			}
 			return match;
 		}
@@ -164,8 +173,8 @@ namespace DotaApi.Model
 			public int Duration { get; set; }
 			public int Start_Time { get; set; }
 			public DateTime StartTime { get; set; }
-			public int Match_ID { get; set; }
-			public int Match_Seq_Num { get; set; }
+			public long Match_ID { get; set; }
+			public long Match_Seq_Num { get; set; }
 			public int Tower_Status_Radiant { get; set; }
 			public int Tower_Status_Dire { get; set; }
 			public int Barracks_Status_Radiant { get; set; }
@@ -183,7 +192,7 @@ namespace DotaApi.Model
 
 		public class MatchDetailsRootObject
 		{
-			public MatchDetailsResult result { get; set; }
+			public MatchDetailsResult Result { get; set; }
 		}
 	}
 }
