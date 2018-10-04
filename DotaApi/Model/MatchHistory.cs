@@ -55,12 +55,12 @@ namespace DotaApi.Model
 					Console.WriteLine("         Player {0} of {1}", playercountInt, match.Players.Count);
 					string name = Common.ConvertIDtoName(player.Hero_ID, heroes);
 					player.Name = name;
-					player.SteamVanityName = SteamAccount.GetSteamAccount(player.Account_ID).PlayerName;
+					player.PlayerName = SteamAccount.GetSteamAccount(player.Account_ID).PersonaName;
 
 					Console.WriteLine("             Name: {0}", name);
 					Console.WriteLine("             Hero ID: {0}", player.Hero_ID);
 					Console.WriteLine("             Account ID: {0}", player.Account_ID);
-					Console.WriteLine("             Vanity Name: {0}", player.SteamVanityName);
+					Console.WriteLine("             Player Name: {0}", player.PlayerName);
 
 					playercountInt++;
 				}
@@ -112,7 +112,7 @@ namespace DotaApi.Model
 		public int Player_Slot { get; set; }
 		public int Hero_ID { get; set; }
 		public string Name { get; set; }
-		public string SteamVanityName { get; set; }
+		public string PlayerName { get; set; }
 	}
 
 	public class Match

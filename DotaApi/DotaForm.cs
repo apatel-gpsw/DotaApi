@@ -41,7 +41,7 @@ namespace DotaApi
 			List<Item> items = Common.ParseItemsText(itemstext);
 
 			//Get match details for match id 1277955116.
-			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(1277955116, items);
+			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(/*1277955116*/4142945482, items);
 			// 1277955116
 			// 3049649968
 

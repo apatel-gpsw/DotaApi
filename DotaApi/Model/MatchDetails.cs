@@ -32,14 +32,12 @@ namespace DotaApi.Model
 
 			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.Result.Start_Time);
 
-			Console.WriteLine("Match ID: {0}", match.Match_ID);
-			Console.WriteLine("Match SeqNum: {0}", match.Match_Seq_Num);
-			Console.WriteLine("Human Players: {0}", match.Human_Players);
-			Console.WriteLine("Start Time: {0}", match.StartTime);
+			Console.WriteLine($"Match ID: {match.Match_ID}");
+			Console.WriteLine($"Match SeqNum: {match.Match_Seq_Num}");
+			Console.WriteLine($"Human Players: {match.Human_Players}");
+			Console.WriteLine($"Duration: {match.Duration}");
+			Console.WriteLine($"Game Mode: {match.Game_Mode}");
 			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Yype);
-
-			var onePlayer = detail.Result.Players[0];
-			DataTable t = new DataTable();
 
 			foreach (var player in detail.Result.Players)
 			{
@@ -50,6 +48,17 @@ namespace DotaApi.Model
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
+				var steamaccount = SteamAccount.GetSteamAccount(player.Account_ID);
+				player.PlayerName = steamaccount.PersonaName;
+
+				sb.AppendLine($"Player Name: {player.PlayerName}");
+				sb.AppendLine($"Hero: {player.Name}");
+				sb.AppendLine($"\tHero Level: {player.Level}");
+				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
+				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
+				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
+				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
+
 				// getting item names based on the id number
 				player.Item0 = player.Item_0 > 0 ? Common.ConvertIDtoName(player.Item_0, DotaItems) : null;
 				player.Item1 = player.Item_1 > 0 ? Common.ConvertIDtoName(player.Item_1, DotaItems) : null;
@@ -58,17 +67,9 @@ namespace DotaApi.Model
 				player.Item4 = player.Item_4 > 0 ? Common.ConvertIDtoName(player.Item_4, DotaItems) : null;
 				player.Item5 = player.Item_5 > 0 ? Common.ConvertIDtoName(player.Item_5, DotaItems) : null;
 
-				var steamaccount = SteamAccount.GetSteamAccount(player.Account_ID);
-				player.SteamVanityName = steamaccount.PlayerName;
-
-				sb.AppendLine($"Vanity Name: {player.SteamVanityName}");
-				sb.AppendLine($"Hero: {player.Name}");
-				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
-				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
-				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
-				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
-				sb.AppendLine($"\tGold Spent: {player.Gold_Spent}");
-				sb.AppendLine($"\tEnd of game Gold: {player.Gold}");
+				player.Backpack0 = player.Backpack_0 > 0 ? Common.ConvertIDtoName(player.Backpack_0, DotaItems) : null;
+				player.Backpack1 = player.Backpack_1 > 0 ? Common.ConvertIDtoName(player.Backpack_1, DotaItems) : null;
+				player.Backpack2 = player.Backpack_2 > 0 ? Common.ConvertIDtoName(player.Backpack_2, DotaItems) : null;
 
 				sb.AppendLine("Items:");
 				if (!string.IsNullOrEmpty(player.Item0))
@@ -83,6 +84,14 @@ namespace DotaApi.Model
 					sb.Append($" | Slot 5: {player.Item4}");
 				if (!string.IsNullOrEmpty(player.Item5))
 					sb.Append($" | Slot 6: {player.Item5}");
+				sb.AppendLine();
+
+				if (!string.IsNullOrEmpty(player.Backpack0))
+					sb.Append($"Backpack Slot 1: {player.Backpack0}");
+				if (!string.IsNullOrEmpty(player.Backpack1))
+					sb.Append($" | Backpack  Slot 2: {player.Backpack1}");
+				if (!string.IsNullOrEmpty(player.Backpack2))
+					sb.Append($" | Backpack Slot 3: {player.Backpack2}");
 				sb.AppendLine();
 				sb.Append("Ability Upgrade Path:");
 				sb.AppendLine();
@@ -135,9 +144,10 @@ namespace DotaApi.Model
 		{
 			public string Account_ID { get; set; }
 			public string Name { get; set; }
-			public string SteamVanityName { get; set; }
+			public string PlayerName { get; set; }
 			public string Steamid64 { get; set; }
 			public string Steamid32 { get; set; }
+			public string ProfileUrl { get; set; }
 			public int PlayerSlot { get; set; }
 			public int Hero_ID { get; set; }
 			public int Item_0 { get; set; }
@@ -166,6 +176,12 @@ namespace DotaApi.Model
 			public int Tower_Damage { get; set; }
 			public int Hero_Healing { get; set; }
 			public int Level { get; set; }
+			public int Backpack_0 { get; set; }
+			public string Backpack0 { get; set; }
+			public int Backpack_1 { get; set; }
+			public string Backpack1 { get; set; }
+			public int Backpack_2 { get; set; }
+			public string Backpack2 { get; set; }
 			public List<AbilityUpgrade> Ability_Upgrades { get; set; }
 		}
 
