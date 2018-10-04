@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
 
@@ -41,7 +42,7 @@ namespace DotaApi.Model
 
 				Hero = new Hero
 				{
-					Name = StringManipulation.UppercaseFirst(hero.Name.Replace("npc_dota_hero_", "").Replace("_", " ")),
+					Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.Name.Replace("npc_dota_hero_", "").Replace("_", " ")),
 					ID = hero.ID,
 					OrigName = hero.Name
 				};

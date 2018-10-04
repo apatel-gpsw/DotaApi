@@ -11,7 +11,7 @@ namespace DotaApi.Helpers
 		public static string UppercaseFirst(string s)
 		{
 			// Check for empty string.
-			if(string.IsNullOrEmpty(s))
+			if (string.IsNullOrEmpty(s))
 				return string.Empty;
 
 			// Return char and concatenate substring.
@@ -41,11 +41,11 @@ namespace DotaApi.Helpers
 			// Found a cool way in PHP to convert steam ID so I adopted the method, credit
 			// goes to original author, page here: https://gist.github.com/almirsarajcic/4664387
 
-			if(string.IsNullOrEmpty(SteamAccountID))
+			if (string.IsNullOrEmpty(SteamAccountID))
 				return null;
 			// If the length of the SteamID is 17 characters
 			// we will assume it is a 64 id
-			else if(SteamAccountID.Length == 17)
+			else if (SteamAccountID.Length == 17)
 				return SteamIDConverter64to32(SteamAccountID);
 			else
 				return SteamIDConverter32to64(SteamAccountID);
@@ -85,7 +85,7 @@ namespace DotaApi.Helpers
 
 				return converted_id;
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				return SteamAccountID;
 			}

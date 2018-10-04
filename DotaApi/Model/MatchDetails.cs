@@ -43,46 +43,49 @@ namespace DotaApi.Model
 
 			foreach (var player in detail.Result.Players)
 			{
-				Console.WriteLine("Account ID: {0}", player.Account_ID);
+				StringBuilder sb = new StringBuilder();
+
+				sb.AppendLine($"\nAccount ID: {player.Account_ID}");
 				player.Name = Common.ConvertIDtoName(player.Hero_ID, heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
 				// getting item names based on the id number
-				player.Item0 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_0.ToString()), DotaItems);
-				player.Item1 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_1.ToString()), DotaItems).Replace("item ", "");
-				player.Item2 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_2.ToString()), DotaItems);
-				player.Item3 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_3.ToString()), DotaItems);
-				player.Item4 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_4.ToString()), DotaItems);
-				player.Item5 = Common.ConvertIDtoName(Convert.ToInt32(player.Item_5.ToString()), DotaItems);
+				player.Item0 = player.Item_0 > 0 ? Common.ConvertIDtoName(player.Item_0, DotaItems) : null;
+				player.Item1 = player.Item_1 > 0 ? Common.ConvertIDtoName(player.Item_1, DotaItems) : null;
+				player.Item2 = player.Item_2 > 0 ? Common.ConvertIDtoName(player.Item_2, DotaItems) : null;
+				player.Item3 = player.Item_3 > 0 ? Common.ConvertIDtoName(player.Item_3, DotaItems) : null;
+				player.Item4 = player.Item_4 > 0 ? Common.ConvertIDtoName(player.Item_4, DotaItems) : null;
+				player.Item5 = player.Item_5 > 0 ? Common.ConvertIDtoName(player.Item_5, DotaItems) : null;
 
 				var steamaccount = SteamAccount.GetSteamAccount(player.Account_ID);
 				player.SteamVanityName = steamaccount.PlayerName;
-
-				StringBuilder sb = new StringBuilder();
 
 				sb.AppendLine($"Vanity Name: {player.SteamVanityName}");
 				sb.AppendLine($"Hero: {player.Name}");
 				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
 				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
-				sb.AppendLine($"\tGold");
 				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
+				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
 				sb.AppendLine($"\tGold Spent: {player.Gold_Spent}");
 				sb.AppendLine($"\tEnd of game Gold: {player.Gold}");
 
-				sb.AppendLine("Items");
-				if (player.Item0 != null)
-					sb.Append($"Slot 0: {player.Item0} |");
-				if (player.Item1 != null)
-					sb.Append($" Slot 1: {player.Item1} |");
-				if (player.Item2 != null)
-					sb.Append($" Slot 2: {player.Item2} |");
-				if (player.Item3 != null)
-					sb.Append($" Slot 3: {player.Item3} |");
-				sb.Append($" Slot 4: {player.Item4} |");
-				if (player.Item4 != null)
-					sb.AppendLine($"Slot 5: {player.Item5}");
-				sb.AppendLine("Ability Upgrade Path");
+				sb.AppendLine("Items:");
+				if (!string.IsNullOrEmpty(player.Item0))
+					sb.Append($"Slot 1: {player.Item0}");
+				if (!string.IsNullOrEmpty(player.Item1))
+					sb.Append($" | Slot 2: {player.Item1}");
+				if (!string.IsNullOrEmpty(player.Item2))
+					sb.Append($" | Slot 3: {player.Item2}");
+				if (!string.IsNullOrEmpty(player.Item3))
+					sb.Append($" | Slot 4: {player.Item3}");
+				if (!string.IsNullOrEmpty(player.Item4))
+					sb.Append($" | Slot 5: {player.Item4}");
+				if (!string.IsNullOrEmpty(player.Item5))
+					sb.Append($" | Slot 6: {player.Item5}");
+				sb.AppendLine();
+				sb.Append("Ability Upgrade Path:");
+				sb.AppendLine();
 
 				// ability output
 				// In some scenarios a user might play the game
@@ -113,7 +116,7 @@ namespace DotaApi.Model
 				{
 					sb.AppendLine("No abilities data");
 				}
-				Console.Write(sb.ToString());
+				Console.WriteLine(sb.ToString());
 			}
 			return match;
 		}

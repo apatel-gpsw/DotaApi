@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using DotaApi.Model;
@@ -31,6 +32,7 @@ namespace DotaApi.Helpers
 			var itemDict = items.ToDictionary(x => x.ID, x => x.Name);
 
 			return StringManipulation.UppercaseFirst(itemDict.Where(x => x.Key == id).FirstOrDefault().Value);
+			//return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(itemDict.Where(x => x.Key == id).FirstOrDefault().Value);
 		}
 
 		public static List<Ability> ParseAbilityText()
@@ -125,7 +127,7 @@ namespace DotaApi.Helpers
 					item = new Item();
 					itemfound = true;
 					item.Name = trimmed_clean.Replace("item ", "");
-					item.Name = StringManipulation.UppercaseFirst(item.Name);
+					item.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.Name);
 					curitem.Add(trimmed_clean);
 				}
 
@@ -178,28 +180,29 @@ namespace DotaApi.Helpers
 					if (trimmed_clean.StartsWith("ItemQuality"))
 					{
 						item.ItemQuality = trimmed_clean.Replace("ItemQuality", "");
-						;
 						curitem.Add(trimmed_clean);
 					}
 
 					if (trimmed_clean.StartsWith("ItemAliases"))
 					{
-						item.ItemAliases = trimmed_clean.Replace("ItemAliases", "");
-						;
-						curitem.Add(trimmed_clean);
+						if (string.IsNullOrEmpty(item.ItemAliases))
+						{
+							item.ItemAliases = trimmed_clean.Replace("ItemAliases", "");
+							int index = item.ItemAliases.LastIndexOf(";") == -1 ? 0 : item.ItemAliases.LastIndexOf(";");
+							item.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(item.ItemAliases.Substring(index).Replace(";", ""));
+							curitem.Add(trimmed_clean);
+						}
 					}
 
 					if (trimmed_clean.StartsWith("ItemStackable"))
 					{
 						item.ItemStackable = trimmed_clean.Replace("ItemStackable", "");
-						;
 						curitem.Add(trimmed_clean);
 					}
 
 					if (trimmed_clean.StartsWith("ItemShareability"))
 					{
 						item.ItemShareability = trimmed_clean.Replace("ItemShareability", "");
-						;
 						curitem.Add(trimmed_clean);
 					}
 
