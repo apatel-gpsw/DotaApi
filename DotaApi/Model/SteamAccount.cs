@@ -45,7 +45,6 @@ namespace DotaApi.Model
 			public string AvatarMedium { get; set; }
 			public string AvatarFull { get; set; }
 			public int CurrentStatus { get; set; }
-
 		}
 
 		public class Response

@@ -38,7 +38,10 @@ namespace DotaApi
 			//memory so we can make the association
 			//for match details.
 			string[] itemstext = File.ReadAllLines(Common.ITEM_FILE);
-			List<Item> items = Common.ParseItemsText(itemstext);
+			List<Item> items = Common.GetGameItems(false);
+			//Common.ParseItemsText(itemstext);
+
+			// http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=23CEC905617913D3710DC832621110F3&language=en
 
 			//Get match details for match id 1277955116.
 			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(/*1277955116*/4142945482, items);
@@ -47,15 +50,13 @@ namespace DotaApi
 
 			var nextmatches = MatchHistory.GetMatchHistoryBySeqNum(matchdetails.Match_Seq_Num, 25, items);
 
-
-
 			//Gets details regarding a steam account using
 			//account id.
 			string SteamID = "111348541";
 			var steamaccount = SteamAccount.GetSteamAccount(SteamID);
 
 			//Get list of latest heroes with names parsed/cleaned.
-			List<Heroes.Hero> heros = Heroes.GetHeroes(true);
+			List<Heroes.Hero> heros = Common.GetHeroes(true);
 
 			//get latest 100 matches with brief details (no hero items/abilities/build info).
 			List<Match> latest100matches = MatchHistory.GetMatchHistory();

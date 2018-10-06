@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
@@ -15,12 +14,7 @@ namespace DotaApi.Model
 		/// </summary>
 		public static MatchDetailsResult GetMatchDetail(long matchid, List<Item> DotaItems)
 		{
-			// to do
-			// get match details
-			// Uri is: https:// api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=27110133&key=<key>
-
-			// we get a list of the latest heroes
-			var heroes = Heroes.GetHeroes(false);
+			var heroes = Common.GetHeroes(false);
 
 			// Get list of abilities
 			var abilities = Common.ParseAbilityText();

@@ -17,7 +17,7 @@ namespace DotaApi.Model
 			// Players including abilities/build info
 
 			// we get a list of the latest heroes
-			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
+			List<Heroes.Hero> heroes = Common.GetHeroes(false);
 			List<Match> Matches = new List<Match>();
 
 			// download the response
@@ -84,7 +84,7 @@ namespace DotaApi.Model
 			// players including abilities/build info
 
 			// we get a list of the latest heroes
-			List<Heroes.Hero> heroes = Heroes.GetHeroes(false);
+			List<Heroes.Hero> heroes = Common.GetHeroes(false);
 
 			// create a container to store all of matches with everything
 			List<MatchDetails.MatchDetailsResult> matchlist = new List<MatchDetails.MatchDetailsResult>();

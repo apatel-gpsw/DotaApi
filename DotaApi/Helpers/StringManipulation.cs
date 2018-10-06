@@ -5,20 +5,6 @@ namespace DotaApi.Helpers
 	public class StringManipulation
 	{
 		/// <summary>
-		/// Capitalizes only the first character of the word.
-		/// <seealso cref="http://www.dotnetperls.com/uppercase-first-letter"/>
-		/// </summary>
-		public static string UppercaseFirst(string s)
-		{
-			// Check for empty string.
-			if (string.IsNullOrEmpty(s))
-				return string.Empty;
-
-			// Return char and concatenate substring.
-			return char.ToUpper(s[0]) + s.Substring(1);
-		}
-
-		/// <summary>
 		/// Converts UTC time to local time.
 		/// <seealso cref="https://stackoverflow.com/questions/249760/how-to-convert-unix-timestamp-to-datetime-and-vice-versa"/>
 		/// </summary>
