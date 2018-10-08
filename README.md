@@ -14,7 +14,10 @@ https://dev.dota2.com/showthread.php?t=138016
 
 ## Flow:
 1. Build Items List object using [GetGameItems()](https://wiki.teamfortress.com/wiki/WebAPI/GetGameItems).
-   - Item JSON Object
+   - Item Image URL example: http://cdn.dota2.com/apps/dota2/images/items/blink_lg.png
+   <details>
+   <summary>Hero JSON Object</summary>
+   <p>
    
    ```
    {
@@ -32,12 +35,13 @@ https://dev.dota2.com/showthread.php?t=138016
          ]
       }
    }
-   ```
-   - Item Image URL example: http://cdn.dota2.com/apps/dota2/images/items/blink_lg.png
-2. Build Heros List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes).
-   - Hero JSON Object
+   \```
+   </p>
+   </details>
+2. Build Heros List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes). 
+   - Hero Image URL example: http://cdn.dota2.com/apps/dota2/images/heroes/antimage_lg.png
    <details>
-   <summary>I could use some help...</summary>
+   <summary>Hero JSON Object</summary>
    <p>
    
    ```
@@ -54,10 +58,12 @@ https://dev.dota2.com/showthread.php?t=138016
    }
    \```
    </p>
-   </details> 
-   - Hero Image URL example: http://cdn.dota2.com/apps/dota2/images/heroes/antimage_lg.png
+   </details>
 3. Build Abilities List object using `npc_abilities.txt` file. Steam doesn't provide any API to fetch the abilities, not sure why.
-   - Abilities text Object
+   - Ability Image URL example: http://cdn.dota2.com/apps/dota2/images/abilities/antimage_blink_md.png
+   <details>
+   <summary>Hero JSON Object</summary>
+   <p>
    
    ```
    {
@@ -83,7 +89,8 @@ https://dev.dota2.com/showthread.php?t=138016
          }
       }
    }
-   ```
-   - Ability Image URL example: http://cdn.dota2.com/apps/dota2/images/abilities/antimage_blink_md.png
+   \```
+   </p>
+   </details>
 4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, the match id is hardcoded.
 5. Show data on the console.
