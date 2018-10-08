@@ -26,13 +26,16 @@ namespace DotaApi.Model
 			MatchDetailsResult match = detail.Result;
 
 			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.Result.Start_Time);
+			TimeSpan time = TimeSpan.FromSeconds(match.Duration);
+			string gameDuration = time.ToString(@"hh\:mm\:ss");
+			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Type);
 
 			Console.WriteLine($"Match ID: {match.Match_ID}");
 			Console.WriteLine($"Match SeqNum: {match.Match_Seq_Num}");
 			Console.WriteLine($"Human Players: {match.Human_Players}");
-			Console.WriteLine($"Duration: {match.Duration}");
+			Console.WriteLine($"Duration: {gameDuration}");
 			Console.WriteLine($"Game Mode: {match.Game_Mode}");
-			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Yype);
+			Console.WriteLine($"Lobby Type: {match.Lobbytype}");
 
 			foreach (var player in detail.Result.Players)
 			{
@@ -195,7 +198,7 @@ namespace DotaApi.Model
 			public int Barracks_Status_Dire { get; set; }
 			public int Cluster { get; set; }
 			public int First_Blood_Time { get; set; }
-			public int Lobby_Yype { get; set; }
+			public int Lobby_Type { get; set; }
 			public string Lobbytype { get; set; }
 			public int Human_Players { get; set; }
 			public int Leagueid { get; set; }
