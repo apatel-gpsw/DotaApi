@@ -14,6 +14,7 @@ https://dev.dota2.com/showthread.php?t=138016
 
 ## Flow:
 1. Build Items List object using [GetGameItems()](https://wiki.teamfortress.com/wiki/WebAPI/GetGameItems).
+   > API: http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=<api key>&language=en
    > Item Image URL example: http://cdn.dota2.com/apps/dota2/images/items/blink_lg.png
    <details>
    <summary>Item JSON Object</summary>
@@ -36,6 +37,7 @@ https://dev.dota2.com/showthread.php?t=138016
       }
    }
 2. Build Heros List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes). 
+   > API: https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=<api key>&language=en
    > Hero Image URL example: http://cdn.dota2.com/apps/dota2/images/heroes/antimage_lg.png
    <details>
    <summary>Hero JSON Object</summary>
