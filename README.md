@@ -59,7 +59,7 @@ https://dev.dota2.com/showthread.php?t=138016
    <summary>Hero JSON Object</summary>
    <p>
    
-   ```json
+   ```
    {
       "DOTAAbilities":{
         "antimage_mana_break"
@@ -84,9 +84,5 @@ https://dev.dota2.com/showthread.php?t=138016
         }
       }
    }
-   \```
-   
-   </p>
-   </details>
 4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, the match id is hardcoded.
 5. Show data on the console.
