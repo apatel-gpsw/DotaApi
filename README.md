@@ -35,10 +35,6 @@ https://dev.dota2.com/showthread.php?t=138016
          ]
       }
    }
-   \```
-   
-   </p>
-   </details>
 2. Build Heros List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes). 
    - Hero Image URL example: http://cdn.dota2.com/apps/dota2/images/heroes/antimage_lg.png
    <details>
@@ -57,10 +53,6 @@ https://dev.dota2.com/showthread.php?t=138016
          ]
       }
    }
-   \```
-   
-   </p>
-   </details>
 3. Build Abilities List object using `npc_abilities.txt` file. Steam doesn't provide any API to fetch the abilities, not sure why.
    - Ability Image URL example: http://cdn.dota2.com/apps/dota2/images/abilities/antimage_blink_md.png
    <details>
@@ -69,15 +61,15 @@ https://dev.dota2.com/showthread.php?t=138016
    
    ```json
    {
-   "DOTAAbilities":{
-      "antimage_mana_break"
-      {
-         "ID"                  "5003"
-         "AbilityBehavior"         "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-         "AbilityUnitDamageType"      "DAMAGE_TYPE_PHYSICAL"      
-         "SpellImmunityType"         "SPELL_IMMUNITY_ENEMIES_NO"
-         "AbilitySpecial"
-         {
+      "DOTAAbilities":{
+        "antimage_mana_break"
+        {
+          "ID"                  "5003"
+          "AbilityBehavior"         "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+          "AbilityUnitDamageType"      "DAMAGE_TYPE_PHYSICAL"      
+          "SpellImmunityType"         "SPELL_IMMUNITY_ENEMIES_NO"
+          "AbilitySpecial"
+          {
             "01"
             {
                "var_type"         "FIELD_FLOAT"
@@ -88,7 +80,8 @@ https://dev.dota2.com/showthread.php?t=138016
                "var_type"         "FIELD_INTEGER"
                "mana_per_hit"      "28 40 52 64"
             }
-         }
+          }
+        }
       }
    }
    \```
