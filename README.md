@@ -2,6 +2,8 @@
 
 Using the Steam APIs building match details on the windows tool.
 
+`First things first, register yourself on https://steamcommunity.com/dev/apikey and replace the API Key you receive in the App.config`
+
 **Better Steam API documentation** (Dota Game ID: 570)
 https://steamwebapi.azurewebsites.net/
 
