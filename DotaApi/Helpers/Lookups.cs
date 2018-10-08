@@ -8,7 +8,6 @@ namespace DotaApi.Helpers
 		// This should be the only value that you need to change, obtain an API
 		// key from steam and replace below.
 		public static string API = ConfigurationManager.AppSettings["APIKey"].ToString();
-		//23CEC905617913D3710DC832621110F3
 
 		public static string ITEM_FILE = @"items.txt";
 		public static string ABILITY_FILE = @"npc_abilities.txt";

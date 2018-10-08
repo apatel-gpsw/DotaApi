@@ -43,7 +43,7 @@ namespace DotaApi
 			List<Item> items = Common.GetGameItems(false);
 			//Common.ParseItemsText(itemstext);
 
-			// http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=23CEC905617913D3710DC832621110F3&language=en
+			// http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=<api_key>&language=en
 
 			//Get match details for match id 1277955116.
 			MatchDetails.MatchDetailsResult matchdetails = MatchDetails.GetMatchDetail(/*1277955116*/4142945482, items);
