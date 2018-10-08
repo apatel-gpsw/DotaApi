@@ -19,7 +19,7 @@ https://dev.dota2.com/showthread.php?t=138016
    <summary>Hero JSON Object</summary>
    <p>
    
-   ```
+   ```json
    {
    "result":{
       "items":[
@@ -44,7 +44,7 @@ https://dev.dota2.com/showthread.php?t=138016
    <summary>Hero JSON Object</summary>
    <p>
    
-   ```
+   ```json
    {
    "result":{
       "heroes":[
@@ -65,7 +65,7 @@ https://dev.dota2.com/showthread.php?t=138016
    <summary>Hero JSON Object</summary>
    <p>
    
-   ```
+   ```json
    {
    "DOTAAbilities":{
       "antimage_mana_break"
