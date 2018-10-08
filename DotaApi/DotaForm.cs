@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using DotaApi.Helpers;
 using DotaApi.Model;
+using static DotaApi.Helpers.Lookups;
 
 namespace DotaApi
 {
@@ -37,7 +38,8 @@ namespace DotaApi
 			//lets parse items.txt and store this data into
 			//memory so we can make the association
 			//for match details.
-			string[] itemstext = File.ReadAllLines(Common.ITEM_FILE);
+			// string[] itemstext = File.ReadAllLines(ITEM_FILE);
+
 			List<Item> items = Common.GetGameItems(false);
 			//Common.ParseItemsText(itemstext);
 

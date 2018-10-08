@@ -13,6 +13,8 @@ namespace DotaApi.Model
 			public string Name { get; set; }
 			public string OrigName { get; set; }
 			public int ID { get; set; }
+			public string Localized_Name { get; set; }
+			public string HeroImage { get; set; }
 		}
 
 		public class HeroesRoot

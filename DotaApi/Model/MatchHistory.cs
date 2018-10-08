@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
+using static DotaApi.Helpers.Lookups;
 
 namespace DotaApi.Model
 {
@@ -21,7 +22,7 @@ namespace DotaApi.Model
 			List<Match> Matches = new List<Match>();
 
 			// download the response
-			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHHISTORYURL, Common.API);
+			string response = GetWebResponse.DownloadSteamAPIString(MATCHHISTORYURL, API);
 
 			// Serializing json data to our class
 			// This is when we parse all of the json data into our custom object classes
@@ -70,8 +71,6 @@ namespace DotaApi.Model
 				matchcountInt++;
 			}
 			return Matches;
-
-
 		}
 
 		/// <summary>Used to get the matches in the order which they were recorded (i.e. sorted ascending by match_seq_num).
@@ -90,7 +89,7 @@ namespace DotaApi.Model
 			List<MatchDetails.MatchDetailsResult> matchlist = new List<MatchDetails.MatchDetailsResult>();
 
 			// download the response
-			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHHISTORYBYSEQURL, Common.API + "&start_at_match_seq_num=" + matchseqnumb + "&matches_requested=" + requestedmatches);
+			string response = GetWebResponse.DownloadSteamAPIString(MATCHHISTORYBYSEQURL, API + "&start_at_match_seq_num=" + matchseqnumb + "&matches_requested=" + requestedmatches);
 
 
 			// serializing json data to our class

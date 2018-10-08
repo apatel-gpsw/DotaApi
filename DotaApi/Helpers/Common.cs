@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using DotaApi.Model;
 using Newtonsoft.Json;
+using static DotaApi.Helpers.Lookups;
 using static DotaApi.Model.Heroes;
 using static DotaApi.Model.Item;
 
@@ -12,21 +14,6 @@ namespace DotaApi.Helpers
 {
 	public class Common
 	{
-		// This should be the only value that you need to change, obtain an API
-		// key from steam and replace below.
-		public static string API = "27675C91D5E776860B1903086197AFBA";
-		//23CEC905617913D3710DC832621110F3
-
-		public static string ITEM_FILE = @"D:\git\DotaApi\items.txt";
-		public static string ABILITY_FILE = @"D:\git\DotaApi\npc_abilities.txt";
-
-		// steam urls to get json data
-		public static string MATCHHISTORYURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=";
-		public static string ITEMSURL = @"http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=";
-		public static string HEROSURL = @"https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=";
-		public static string MATCHDETAILSURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?&key=";
-		public static string STEAMACCOUNTURL = @"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=";
-		public static string MATCHHISTORYBYSEQURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key=";
 
 		/// <summary>
 		/// Generic Method using <see cref="ISearchableDictionary"/> properties.
@@ -41,9 +28,13 @@ namespace DotaApi.Helpers
 			return name != null ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name) : "";
 		}
 
+		/// <summary>
+		/// Reads the npc_abilities.txt and builds the abilities class.
+		/// </summary>
 		public static List<Ability> ParseAbilityText()
 		{
-			var text = File.ReadAllLines(ABILITY_FILE);
+			string abilityFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", ABILITY_FILE);
+			var text = File.ReadAllLines(abilityFile);
 			bool itemfound = false;
 
 			// List to hold our parsed items.
@@ -52,8 +43,9 @@ namespace DotaApi.Helpers
 			// Item object will be populating
 			Ability ability = new Ability();
 
-			//lets go line by line to start parsing.
+			// Let's go line by line to start parsing.
 			int count = 0;
+			string rawAbilityName = "";
 			foreach (string line in text)
 			{
 				// Clean up the text, remove quotes.
@@ -69,8 +61,11 @@ namespace DotaApi.Helpers
 					// We get the hero name
 					ability.HeroName = text[count - 4].Split('_')[0].Replace("\"", "").Replace("\t", "").Trim();
 
-					// Lets remove hero name from original
-					ability.Name = text[count - 4].Replace(ability.HeroName, "").Replace("_", " ").Replace("\"", "").Replace("\t", "").Trim();
+					rawAbilityName = text[count - 4].Replace(ability.HeroName, "").Replace("\"", "").Replace("\t", "").Trim();
+					ability.AbilityImage = GetImageURL(Entity.abilities, ability.HeroName + rawAbilityName, ImageSize.md);
+
+					// Let's remove hero name from original
+					ability.Name = rawAbilityName.Replace("_", " ");
 				}
 
 				// If we are on a current item then lets do some other operations to gather details
@@ -106,28 +101,35 @@ namespace DotaApi.Helpers
 			return abilities;
 		}
 
+		/// <summary>
+		/// Gets the latest list of items from Steam.
+		/// </summary>
 		public static List<Item> GetGameItems(bool verbose)
 		{
 			string response = GetWebResponse.DownloadSteamAPIString(ITEMSURL, API);
-			ItemsObject heroesObject = JsonConvert.DeserializeObject<ItemsObject>(response);
+			ItemsObject itemsObject = JsonConvert.DeserializeObject<ItemsObject>(response);
 			List<Item> resultItems = new List<Item>();
 
 			//if verbose flag is set to true, then show console
 			//message.
 			if (verbose == true)
-				Console.WriteLine("Count of Heroes {0}", heroesObject.Result.Items.Count);
+				Console.WriteLine("Count of Heroes {0}", itemsObject.Result.Items.Count);
 
-			int herocountInt = 0;
+			int itemCountInt = 0;
 			Item Item;
-			foreach (var item in heroesObject.Result.Items)
+			string rawItemName = "";
+			foreach (var item in itemsObject.Result.Items)
 			{
 				if (verbose == true)
-					Console.Write("{0} of {1}. Hero orig-name: {2}|", herocountInt, heroesObject.Result.Items.Count, item.Name);
-				string rawItemName = item.Name.Replace("item_", "");
-				string itemImage = $"http://cdn.dota2.com/apps/dota2/images/items/{rawItemName}_lg.png";
+					Console.Write("{0} of {1}. Item localized-name: {2}|", itemCountInt, itemsObject.Result.Items.Count, item.Localized_Name);
+
+				rawItemName = item.Name.Replace("item_", "");
+				// $"http://cdn.dota2.com/apps/dota2/images/items/{rawItemName}_lg.png";
+				string itemImage = GetImageURL(Entity.items, rawItemName, ImageSize.lg);
+
 				Item = new Item
 				{
-					Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(rawItemName.Replace("_", " ")),
+					Name = item.Localized_Name,
 					ID = item.ID,
 					ItemImage = itemImage
 				};
@@ -135,17 +137,18 @@ namespace DotaApi.Helpers
 					Console.WriteLine(" cleaned: {0}", Item.Name);
 
 				resultItems.Add(Item);
-				herocountInt++;
+				itemCountInt++;
 			}
 
 			return resultItems;
 		}
+
 		/// <summary>
 		/// Gets the latest list of heroes from Steam, requires "HerosClass".
 		/// </summary>
 		public static List<Hero> GetHeroes(bool verbose)
 		{
-			string response = GetWebResponse.DownloadSteamAPIString(Common.HEROSURL, Common.API);
+			string response = GetWebResponse.DownloadSteamAPIString(HEROSURL, API);
 			HeroesObject heroesObject = JsonConvert.DeserializeObject<HeroesObject>(response);
 			List<Hero> resultHeroes = new List<Hero>();
 
@@ -166,17 +169,23 @@ namespace DotaApi.Helpers
 				Console.WriteLine("Hero orig-name: {0}", Hero.Name);
 
 			resultHeroes.Add(Hero);
+			string rawHeroName = "";
 
 			foreach (var hero in heroesObject.Result.Heroes)
 			{
 				if (verbose == true)
 					Console.Write("{0} of {1}. Hero orig-name: {2}|", herocountInt, heroesObject.Result.Heroes.Count, hero.Name);
 
+				rawHeroName = hero.Name.Replace("npc_dota_hero_", "");
+				// http://cdn.dota2.com/apps/dota2/images/heroes/{rawHeroName}_lg.png
+				string heroImage = GetImageURL(Entity.heroes, rawHeroName, ImageSize.lg);
+
 				Hero = new Hero
 				{
-					Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.Name.Replace("npc_dota_hero_", "").Replace("_", " ")),
+					Name = hero.Localized_Name,
 					ID = hero.ID,
-					OrigName = hero.Name
+					OrigName = hero.Name,
+					HeroImage = heroImage
 				};
 				if (verbose == true)
 					Console.WriteLine(" cleaned: {0}", Hero.Name);

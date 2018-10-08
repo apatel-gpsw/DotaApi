@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
+using static DotaApi.Helpers.Lookups;
 
 namespace DotaApi.Model
 {
@@ -19,7 +20,7 @@ namespace DotaApi.Model
 			// Get list of abilities
 			var abilities = Common.ParseAbilityText();
 
-			string response = GetWebResponse.DownloadSteamAPIString(Common.MATCHDETAILSURL, Common.API + "&match_id=" + matchid);
+			string response = GetWebResponse.DownloadSteamAPIString(MATCHDETAILSURL, API + "&match_id=" + matchid);
 
 			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
 			MatchDetailsResult match = detail.Result;

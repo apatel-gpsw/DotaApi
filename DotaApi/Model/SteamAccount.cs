@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DotaApi.Helpers;
 using Newtonsoft.Json;
+using static DotaApi.Helpers.Lookups;
 
 namespace DotaApi.Model
 {
@@ -21,7 +22,7 @@ namespace DotaApi.Model
 
 			string webResponse = string.Empty;
 			var steamaccount = new RootObject();
-			webResponse = GetWebResponse.DownloadSteamAPIString(Common.STEAMACCOUNTURL, (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
+			webResponse = GetWebResponse.DownloadSteamAPIString(STEAMACCOUNTURL, (API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
 
 			// webResponse = GetWebResponse.DownloadSteamAPIString(@"http://api.opendota.com/api/players/347142169", (Common.API + "&steamids=" + StringManipulation.SteamIDConverter(SteamID)));
 

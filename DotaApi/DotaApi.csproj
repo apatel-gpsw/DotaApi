@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="Helpers\Common.cs" />
     <Compile Include="Helpers\GetWebResponse.cs" />
+    <Compile Include="Helpers\Lookups.cs" />
     <Compile Include="Helpers\StringManipulation.cs" />
     <Compile Include="Model\Ability.cs" />
     <Compile Include="Model\Heros.cs" />
@@ -99,7 +100,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Extra\items.txt" />
+    <Content Include="Data\items.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\npc_abilities.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
