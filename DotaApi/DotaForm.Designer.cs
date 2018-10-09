@@ -28,28 +28,36 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			dgView1 = new System.Windows.Forms.DataGridView();
-			((System.ComponentModel.ISupportInitialize)(dgView1)).BeginInit();
-			SuspendLayout();
-			//
-			// dataGridView1
-			//
-			dgView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dgView1.Location = new System.Drawing.Point(12, 41);
-			dgView1.Name = "dataGridView1";
-			dgView1.Size = new System.Drawing.Size(720, 331);
-			dgView1.TabIndex = 0;
-			//
+			this.dgView1 = new System.Windows.Forms.DataGridView();
+			((System.ComponentModel.ISupportInitialize)(this.dgView1)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// dgView1
+			// 
+			this.dgView1.AllowUserToAddRows = false;
+			this.dgView1.AllowUserToDeleteRows = false;
+			this.dgView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+			this.dgView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+			this.dgView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgView1.Location = new System.Drawing.Point(16, 50);
+			this.dgView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.dgView1.Name = "dgView1";
+			this.dgView1.ReadOnly = true;
+			this.dgView1.Size = new System.Drawing.Size(1150, 407);
+			this.dgView1.TabIndex = 0;
+			// 
 			// DotaForm
-			//
-			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			ClientSize = new System.Drawing.Size(744, 384);
-			Controls.Add(dgView1);
-			Name = "DotaForm";
-			Text = "Match Details";
-			((System.ComponentModel.ISupportInitialize)(dgView1)).EndInit();
-			ResumeLayout(false);
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(1182, 473);
+			this.Controls.Add(this.dgView1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Name = "DotaForm";
+			this.Text = "Match Details";
+			((System.ComponentModel.ISupportInitialize)(this.dgView1)).EndInit();
+			this.ResumeLayout(false);
 
 		}
 

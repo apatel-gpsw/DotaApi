@@ -9,23 +9,22 @@ namespace DotaApi.Model
 {
 	public class MatchDetails
 	{
+		// Expression-bodied members
+		public static List<Item> Items { get; } = Common.GetGameItems(false);
+		public static List<Heroes.Hero> Heroes { get; } = Common.GetHeroes(false);
+		public static List<Ability> Abilities { get; } = Common.ParseAbilityText();
 
 		/// <summary>
 		/// Gets match details for a single match, this includes player builds and details. Requires "MatchClass".
 		/// </summary>
-		public static MatchDetailsResult GetMatchDetail(long matchid, List<Item> DotaItems)
+		public static MatchDetailsResult GetMatchDetail(long matchid)
 		{
-			var heroes = Common.GetHeroes(false);
-
-			// Get list of abilities
-			var abilities = Common.ParseAbilityText();
-
 			string response = GetWebResponse.DownloadSteamAPIString(MATCHDETAILSURL, API + "&match_id=" + matchid);
 
 			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
 			MatchDetailsResult match = detail.Result;
 
-			match.StartTime = StringManipulation.UnixTimeStampToDateTime(detail.Result.Start_Time);
+			match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.Start_Time);
 			TimeSpan time = TimeSpan.FromSeconds(match.Duration);
 			string gameDuration = time.ToString(@"hh\:mm\:ss");
 			match.Lobbytype = LobbyTypes.GetLobbyType(match.Lobby_Type);
@@ -37,12 +36,12 @@ namespace DotaApi.Model
 			Console.WriteLine($"Game Mode: {match.Game_Mode}");
 			Console.WriteLine($"Lobby Type: {match.Lobbytype}");
 
-			foreach (var player in detail.Result.Players)
+			foreach (var player in match.Players)
 			{
 				StringBuilder sb = new StringBuilder();
 
 				sb.AppendLine($"\nAccount ID: {player.Account_ID}");
-				player.Name = Common.ConvertIDtoName(player.Hero_ID, heroes);
+				player.Name = Common.ConvertIDtoName(player.Hero_ID, Heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
@@ -58,16 +57,16 @@ namespace DotaApi.Model
 				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
 
 				// getting item names based on the id number
-				player.Item0 = player.Item_0 > 0 ? Common.ConvertIDtoName(player.Item_0, DotaItems) : null;
-				player.Item1 = player.Item_1 > 0 ? Common.ConvertIDtoName(player.Item_1, DotaItems) : null;
-				player.Item2 = player.Item_2 > 0 ? Common.ConvertIDtoName(player.Item_2, DotaItems) : null;
-				player.Item3 = player.Item_3 > 0 ? Common.ConvertIDtoName(player.Item_3, DotaItems) : null;
-				player.Item4 = player.Item_4 > 0 ? Common.ConvertIDtoName(player.Item_4, DotaItems) : null;
-				player.Item5 = player.Item_5 > 0 ? Common.ConvertIDtoName(player.Item_5, DotaItems) : null;
+				player.Item0 = player.Item_0 > 0 ? Common.ConvertIDtoName(player.Item_0, Items) : null;
+				player.Item1 = player.Item_1 > 0 ? Common.ConvertIDtoName(player.Item_1, Items) : null;
+				player.Item2 = player.Item_2 > 0 ? Common.ConvertIDtoName(player.Item_2, Items) : null;
+				player.Item3 = player.Item_3 > 0 ? Common.ConvertIDtoName(player.Item_3, Items) : null;
+				player.Item4 = player.Item_4 > 0 ? Common.ConvertIDtoName(player.Item_4, Items) : null;
+				player.Item5 = player.Item_5 > 0 ? Common.ConvertIDtoName(player.Item_5, Items) : null;
 
-				player.Backpack0 = player.Backpack_0 > 0 ? Common.ConvertIDtoName(player.Backpack_0, DotaItems) : null;
-				player.Backpack1 = player.Backpack_1 > 0 ? Common.ConvertIDtoName(player.Backpack_1, DotaItems) : null;
-				player.Backpack2 = player.Backpack_2 > 0 ? Common.ConvertIDtoName(player.Backpack_2, DotaItems) : null;
+				player.Backpack0 = player.Backpack_0 > 0 ? Common.ConvertIDtoName(player.Backpack_0, Items) : null;
+				player.Backpack1 = player.Backpack_1 > 0 ? Common.ConvertIDtoName(player.Backpack_1, Items) : null;
+				player.Backpack2 = player.Backpack_2 > 0 ? Common.ConvertIDtoName(player.Backpack_2, Items) : null;
 
 				sb.AppendLine("Items:");
 				if (!string.IsNullOrEmpty(player.Item0))
@@ -109,7 +108,7 @@ namespace DotaApi.Model
 						ability.ID = ability.Ability;
 
 						// map the id to a readable name.
-						ability.Name = Common.ConvertIDtoName(Convert.ToInt32(ability.Ability), abilities);
+						ability.Name = Common.ConvertIDtoName(Convert.ToInt32(ability.Ability), Abilities);
 
 						// add the upgrade seconds to the original start
 						// time to get the upgrade time.

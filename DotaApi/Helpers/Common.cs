@@ -12,7 +12,7 @@ using static DotaApi.Model.Item;
 
 namespace DotaApi.Helpers
 {
-	public class Common
+	public static class Common
 	{
 
 		/// <summary>
