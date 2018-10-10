@@ -40,20 +40,20 @@
 			this.dgView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
 			this.dgView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dgView1.Location = new System.Drawing.Point(16, 50);
-			this.dgView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.dgView1.Margin = new System.Windows.Forms.Padding(4);
 			this.dgView1.Name = "dgView1";
 			this.dgView1.ReadOnly = true;
-			this.dgView1.Size = new System.Drawing.Size(1150, 407);
+			this.dgView1.Size = new System.Drawing.Size(1150, 320);
 			this.dgView1.TabIndex = 0;
 			// 
 			// DotaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1182, 473);
+			this.ClientSize = new System.Drawing.Size(1182, 416);
 			this.Controls.Add(this.dgView1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "DotaForm";
 			this.Text = "Match Details";
 			((System.ComponentModel.ISupportInitialize)(this.dgView1)).EndInit();
