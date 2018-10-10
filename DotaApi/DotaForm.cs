@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using DotaApi.Helpers;
-using DotaApi.Model;
 using static DotaApi.Model.MatchDetails;
 
 namespace DotaApi
