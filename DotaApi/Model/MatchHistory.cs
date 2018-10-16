@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DotaApi.Helpers;
 using Newtonsoft.Json;
 using static DotaApi.Helpers.Lookups;
 using static DotaApi.Model.MatchDetails;

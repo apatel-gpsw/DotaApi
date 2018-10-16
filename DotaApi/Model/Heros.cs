@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using DotaApi.Helpers;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace DotaApi.Model
 {
